@@ -244,8 +244,17 @@ mongoose.connect(process.env.MONGODB_URI)
     });
   })
   .catch((err) => {
-    console.error('❌ MongoDB connection error:', err.message);
-    console.log('\n💡 Make sure to update your .env file with a valid MongoDB connection string.');
-    console.log('   Get a free one at: https://www.mongodb.com/atlas\n');
+    console.error('❌ Mongoose connection FATAL ERROR:');
+    console.error(err);
+    console.log('\n💡 Tip: If using MongoDB Atlas, check your IP Whitelist array.');
     process.exit(1);
   });
+
+process.on('uncaughtException', (err) => {
+    console.error('UNCAUGHT EXCEPTION:', err);
+    process.exit(1);
+});
+
+process.on('unhandledRejection', (reason, promise) => {
+    console.error('UNHANDLED REJECTION at:', promise, 'reason:', reason);
+});
