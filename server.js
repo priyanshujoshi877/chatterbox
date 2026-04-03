@@ -227,6 +227,15 @@ io.on('connection', async (socket) => {
 // Connect to MongoDB and start server
 const PORT = process.env.PORT || 3000;
 
+console.log('--- STARTUP DIAGNOSTICS ---');
+console.log('Available Env Vars:', Object.keys(process.env).join(', '));
+if (!process.env.MONGODB_URI) {
+  console.log('🚨 MONGODB_URI is totally missing from process.env');
+} else {
+  console.log('✅ MONGODB_URI exists but its length is:', process.env.MONGODB_URI.length);
+}
+console.log('---------------------------');
+
 mongoose.connect(process.env.MONGODB_URI)
   .then(() => {
     console.log('📦 Connected to MongoDB');
