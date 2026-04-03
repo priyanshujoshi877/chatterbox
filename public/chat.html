@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ChatterBox Chat - Real-time messaging with anyone.">
+  <title>ChatterBox — Chat</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💬</text></svg>">
+</head>
+<body>
+
+  <!-- Animated Background -->
+  <div class="animated-bg">
+    <div class="orb"></div>
+    <div class="orb"></div>
+    <div class="orb"></div>
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Chat Container -->
+  <div class="chat-container">
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="top-row">
+          <div class="app-title">💬 ChatterBox</div>
+          <button class="btn-icon" id="newChatBtn" title="New Chat">✏️</button>
+        </div>
+
+        <!-- Current User Profile -->
+        <div class="user-profile" id="userProfile">
+          <div class="avatar" id="userAvatar">
+            <span id="userInitial">?</span>
+            <div class="status-dot"></div>
+          </div>
+          <div class="user-info">
+            <div class="name" id="userName">Loading...</div>
+            <div class="unique-id" id="userUniqueId" title="Click to copy your ID">...</div>
+          </div>
+        </div>
+
+        <!-- Search -->
+        <div class="search-box">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="searchInput" placeholder="Search conversations...">
+        </div>
+      </div>
+
+      <!-- Conversations -->
+      <div class="conversations-list" id="conversationsList">
+        <div class="empty-conversations" id="emptyConversations">
+          <div class="empty-icon">💭</div>
+          <h3>No conversations yet</h3>
+          <p>Click the ✏️ button to start chatting with someone using their unique ID</p>
+        </div>
+      </div>
+
+      <!-- Logout -->
+      <div class="sidebar-footer">
+        <button class="btn-logout" id="logoutBtn">
+          <span>🚪</span> Logout
+        </button>
+      </div>
+    </div>
+
+    <!-- Chat Area -->
+    <div class="chat-area" id="chatArea">
+      <!-- Empty State -->
+      <div class="chat-area-empty" id="chatEmpty">
+        <div class="empty-chat-icon">💬</div>
+        <h2>Welcome to ChatterBox</h2>
+        <p>Select a conversation from the sidebar or start a new chat by entering someone's unique ID</p>
+      </div>
+
+      <!-- Active Chat (hidden by default) -->
+      <div id="activeChat" style="display:none; flex-direction:column; height:100%;">
+        <!-- Chat Header -->
+        <div class="chat-header">
+          <div class="avatar" id="chatAvatar">
+            <span id="chatAvatarInitial">?</span>
+            <div class="status-dot offline" id="chatStatusDot"></div>
+          </div>
+          <div class="chat-partner-info">
+            <div class="chat-partner-name" id="chatPartnerName">Username</div>
+            <div class="chat-partner-status" id="chatPartnerStatus">Offline</div>
+          </div>
+        </div>
+
+        <!-- Messages -->
+        <div class="messages-area" id="messagesArea"></div>
+
+        <!-- Typing Indicator -->
+        <div class="typing-indicator" id="typingIndicator">
+          <div class="dot"></div>
+          <div class="dot"></div>
+          <div class="dot"></div>
+        </div>
+
+        <!-- Message Input -->
+        <div class="message-input-area">
+          <div class="message-input-wrapper">
+            <input type="text" id="messageInput" placeholder="Type a message..." autocomplete="off" maxlength="2000">
+            <button class="btn-send" id="sendBtn" title="Send message">➤</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- New Chat Modal -->
+  <div class="modal-overlay" id="newChatModal">
+    <div class="modal">
+      <button class="btn-close" id="modalClose">✕</button>
+      <h2>✨ New Conversation</h2>
+      <p class="modal-desc">Enter the unique ID of the person you want to chat with (e.g. #ABC12345)</p>
+      
+      <div class="form-group">
+        <label for="searchUniqueId">Unique ID</label>
+        <input type="text" id="searchUniqueId" class="form-input" placeholder="#ABC12345" maxlength="9">
+      </div>
+
+      <div class="modal-error" id="modalError"></div>
+
+      <div class="user-search-result" id="userSearchResult">
+        <div class="avatar" id="foundAvatar">
+          <span id="foundInitial">?</span>
+        </div>
+        <div class="user-found-info">
+          <div class="user-found-name" id="foundName">Username</div>
+          <div class="user-found-id" id="foundId">#ABC12345</div>
+        </div>
+        <button class="btn-start-chat" id="startChatBtn">Chat</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.socket.io/4.8.0/socket.io.min.js"></script>
+  <script src="js/chat.js"></script>
+</body>
+</html>
